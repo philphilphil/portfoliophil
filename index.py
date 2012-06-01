@@ -1,21 +1,42 @@
-import cherrypy, os
+import cherrypy, os, glob, HelpClasses
 
 class PortfolioPhil(object):
 
 	def template(self, body):
-		f = open('layout.html')
+
+		#Open Layout
+		f = open('./layout.html')
 		layoutHtml = f.read()
 
 		return layoutHtml.replace("${content}", body)
-		
-		#return "<html><head><title>PortfolioPhil</title></head><body><h3>PortfolioPhil Alpha 0.1</h3>"+body+"</body></html>"
 
 	def index(self):
 		return self.template("Hello PortfolioPhil!")
 	index.exposed = True
 
 	def blog(self):
-		return self.template("blog")
+		#Load all files in content_blog folder and output them.
+		#For Later: Paging, Sorting
+		blogEntrys = []
+		output = ""
+
+		#Loop throgh all files
+		for files in glob.glob("./content_blog/*.txt"):
+			#Read file and create a BlogEntry Help Object
+			f = open(files)
+			entry = HelpClasses.BlogEntry(f.readlines())
+			#Append to list
+			blogEntrys.append(entry)
+
+
+		#ToDo: Sort Blog Entrys
+
+		#Output entrys
+		for entry in blogEntrys:
+			output += entry.getBlogEntryHTML()
+			output += "<br /><br />"
+
+		return self.template(output)
 	blog.exposed = True
 
 	def gallery(self):
@@ -28,3 +49,4 @@ class PortfolioPhil(object):
 
 #cherrypy.config.update('conf/portfoliophil.config')
 cherrypy.quickstart(PortfolioPhil(), '/', 'portfoliophil.config')
+
