@@ -4,6 +4,7 @@ portfoliophil -  python portfolio with blog
 Blog
 -------------
 To add Blog entrys just drop a .txt file into the content_blog folder. The File must have the following format:
+
     title: your title here
     date: 01.06.2012
     content:
