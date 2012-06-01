@@ -1,5 +1,6 @@
-title: title
+title: title test
 date: 01.06.2012
-published: yes
 content:
-content here <b>with html styles</b>
+content here <b>with html styles</b><br>
+please be sure to make the line break after 
+content:
