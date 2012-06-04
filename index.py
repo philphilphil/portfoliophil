@@ -1,14 +1,23 @@
-import cherrypy, os, glob, HelpClasses
+import cherrypy, os, glob, HelpClasses, Image
 
 class PortfolioPhil(object):
+
+	def GetGalleryLinks(self):
+		outputHtml = ""
+		for dirname, dirnames, filenames in os.walk('./content_portfolio'):
+			for subdirname in dirnames:
+				outputHtml += "<a href='gallery?folder=" + subdirname + "'>" + subdirname + "</a><br />"
+		return outputHtml
+	GetGalleryLinks.exposed = False
 
 	def template(self, body):
 
 		#Open Layout
 		f = open('./layout.html')
 		layoutHtml = f.read()
-
-		return layoutHtml.replace("${content}", body)
+		layoutHtml = layoutHtml.replace("${content}", body)
+		layoutHtml = layoutHtml.replace("${gallery}", self.GetGalleryLinks())
+		return layoutHtml
 
 	def index(self):
 		return self.template("Hello PortfolioPhil!")
@@ -39,8 +48,14 @@ class PortfolioPhil(object):
 		return self.template(output)
 	blog.exposed = True
 
-	def gallery(self):
-		return self.template("Hello gallery!")
+	def gallery(self, folder):
+		outputHtml = ""
+
+		#Get the image files from the directory, only jpg right now
+		for files in glob.glob("./content_portfolio/" + folder + "/*.jpg"):
+			outputHtml += "<img src='" + files + "'>"
+
+		return self.template(outputHtml)
 	gallery.exposed = True
 
 	def contact(self):
