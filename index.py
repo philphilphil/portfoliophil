@@ -1,7 +1,8 @@
-import cherrypy, os, glob, HelpClasses, Image
-
+import cherrypy, os, glob, HelpClasses
+from PIL import Image
 class PortfolioPhil(object):
 
+	#Unexposed Help Class
 	def GetGalleryLinks(self):
 		outputHtml = ""
 		for dirname, dirnames, filenames in os.walk('./content_portfolio'):
@@ -9,6 +10,21 @@ class PortfolioPhil(object):
 				outputHtml += "<a href='gallery?folder=" + subdirname + "'>" + subdirname + "</a><br />"
 		return outputHtml
 	GetGalleryLinks.exposed = False
+
+	#Unexposed Help Class
+	def CreateThumbnail(self, file):
+		im = Image.open(file)
+		# don't save if thumbnail already exists
+		if not file.endswith("_thumb.jpg"):
+			# convert to thumbnail image
+			im.thumbnail((200, 200), Image.ANTIALIAS)
+
+			#file = file[:-4] + "_thumb"
+
+			# prefix thumbnail file with T_
+			im.save(file + "_thumb.jpg", "JPEG")
+			return
+	CreateThumbnail.exposed = False
 
 	def template(self, body):
 
@@ -53,6 +69,11 @@ class PortfolioPhil(object):
 
 		#Get the image files from the directory, only jpg right now
 		for files in glob.glob("./content_portfolio/" + folder + "/*.jpg"):
+			self.CreateThumbnail(files)
+
+			if  not files.endswith("_thumb.jpg"):
+				continue;
+			
 			outputHtml += "<img src='" + files + "'>"
 
 		return self.template(outputHtml)
