@@ -1,0 +1,12 @@
+
+*.jpg
+
+*.pyc
+
+content_portfolio/.DS_Store
+
+content_portfolio/nature/.DS_Store
+
+createThumbnails/.DS_Store
+
+portfoliophil.config
