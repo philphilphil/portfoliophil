@@ -25,6 +25,18 @@ class PortfolioPhil(object):
 			im.save(file + "_thumb.jpg", "JPEG")
 			return
 	CreateThumbnail.exposed = False
+	
+	#Checks if there are thumbnails to create and if yes it creates them
+	def CreateThumbnailsOutOfThumbOrdner(self):
+		
+		#Get the image files from the directory, only jpg right now
+		for files in glob.glob("./createThumbnails/*.jpg"):
+			self.CreateThumbnail(files)
+		
+			if  not files.endswith("_thumb.jpg"):
+				continue;
+		
+	CreateThumbnailsOutOfThumbOrdner.exposed = False
 
 	def template(self, body):
 
@@ -36,6 +48,9 @@ class PortfolioPhil(object):
 		return layoutHtml
 
 	def index(self):
+		
+		self.CreateThumbnailsOutOfThumbOrdner()
+		
 		return self.template("Hello PortfolioPhil!")
 	index.exposed = True
 
@@ -69,12 +84,12 @@ class PortfolioPhil(object):
 
 		#Get the image files from the directory, only jpg right now
 		for files in glob.glob("./content_portfolio/" + folder + "/*.jpg"):
-			self.CreateThumbnail(files)
+			#self.CreateThumbnail(files)
 
 			if  not files.endswith("_thumb.jpg"):
 				continue;
 			
-			outputHtml += "<img src='" + files + "'>"
+			outputHtml += "<img style='padding: 5px' src='" + files + "'>"
 
 		return self.template(outputHtml)
 	gallery.exposed = True
