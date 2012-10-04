@@ -1,10 +1,7 @@
 import cherrypy, os, glob, HelpClasses
 from PIL import Image
-<<<<<<< HEAD
-=======
 import EXIF
 
->>>>>>> Added jQuery and Lightbox 2 to Gallery, Added Exif data reader (not final)
 class PortfolioPhil(object):
 
 	#Unexposed Help Class
@@ -24,25 +21,6 @@ class PortfolioPhil(object):
 			# convert to thumbnail image
 			im.thumbnail((200, 200), Image.ANTIALIAS)
 
-<<<<<<< HEAD
-			#file = file[:-4] + "_thumb"
-
-			# prefix thumbnail file with T_
-			im.save(file + "_thumb.jpg", "JPEG")
-			return
-	CreateThumbnail.exposed = False
-	
-	#Checks if there are thumbnails to create and if yes it creates them
-	def CreateThumbnailsOutOfThumbOrdner(self):
-		
-		#Get the image files from the directory, only jpg right now
-		for files in glob.glob("./createThumbnails/*.jpg"):
-			self.CreateThumbnail(files)
-		
-			if  not files.endswith("_thumb.jpg"):
-				continue;
-		
-=======
 			# prefix thumbnail file and save
 			im.save(file + "_thumb.jpg", "JPEG")
 			return
@@ -58,7 +36,6 @@ class PortfolioPhil(object):
 			if  not files.endswith("_thumb.jpg"):
 				continue;
 		
->>>>>>> Added jQuery and Lightbox 2 to Gallery, Added Exif data reader (not final)
 	CreateThumbnailsOutOfThumbOrdner.exposed = False
 
 	def template(self, body):
@@ -70,15 +47,9 @@ class PortfolioPhil(object):
 		layoutHtml = layoutHtml.replace("${gallery}", self.GetGalleryLinks())
 		return layoutHtml
 
-<<<<<<< HEAD
 	def index(self):
 		
 		self.CreateThumbnailsOutOfThumbOrdner()
-=======
-	def index(self):
-		
-		self.CreateThumbnailsOutOfThumbOrdner()
->>>>>>> Added jQuery and Lightbox 2 to Gallery, Added Exif data reader (not final)
 		
 		return self.template("Hello PortfolioPhil!")
 	index.exposed = True
@@ -113,15 +84,6 @@ class PortfolioPhil(object):
 
 		#Get the image files from the directory, only jpg right now
 		for files in glob.glob("./content_portfolio/" + folder + "/*.jpg"):
-<<<<<<< HEAD
-			#self.CreateThumbnail(files)
-
-			if  not files.endswith("_thumb.jpg"):
-				continue;
-			
-			outputHtml += "<img style='padding: 5px' src='" + files + "'>"
-=======
->>>>>>> Added jQuery and Lightbox 2 to Gallery, Added Exif data reader (not final)
 
 			if  not files.endswith("_thumb.jpg"):
 				continue;
