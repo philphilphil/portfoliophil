@@ -93,9 +93,8 @@ class PortfolioPhil(object):
 			#for tag in tags.keys():
 			#	print ("Key:"+ tag + " data: " + str(tags[tag]))
 
-
 			outputHtml += "<div class='single'>"
-			outputHtml += "<a href='" + files.replace("_thumb.jpg","") + "' rel='lightbox[gallery]' title='title'><img src='" + files + "'></a>"
+			outputHtml += "<a href='" + files.replace("_thumb.jpg","") + "' rel='lightbox[gallery]' title='"+os.path.basename(files).replace(".jpg_thumb.jpg","")+"'><img src='" + files + "'></a>"
 			outputHtml +="</div>"
 
 		outputHtml += "</div>"
